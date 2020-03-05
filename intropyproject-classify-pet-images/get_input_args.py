@@ -40,4 +40,20 @@ def get_input_args():
     """
     # Replace None with parser.parse_args() parsed argument collection that 
     # you created with this function 
-    return None
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--dir',type=str,default='pet_images/'
+    ,help='path to the folder of the pet images')
+    parser.add_argument('--mdl',type=str,default='vgg'
+    ,help='model of the CNN ')
+    parser.add_argument('--file',type=str,default='dognames.txt'
+    ,help='The file that contains the list of valid dognames')
+
+    return parser.parse_args()
+
+def main():
+    in_args=get_input_args()
+    print("in args: ",in_args.dir,in_args.mdl,in_args.file)
+
+# Call to main function to run the program
+if __name__ == "__main__":
+    main()
