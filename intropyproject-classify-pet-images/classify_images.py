@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/classify_images.py
 #                                                                             
-# PROGRAMMER: 
-# DATE CREATED:                                 
-# REVISED DATE: 
+# PROGRAMMER: LUO JINGYUAN
+# DATE CREATED:   2020.03.06                     
+# REVISED DATE:   2020.03.06
 # PURPOSE: Create a function classify_images that uses the classifier function 
 #          to create the classifier labels and then compares the classifier 
 #          labels to the pet image labels. This function inputs:
@@ -12,7 +12,7 @@
 #             and as in_arg.dir for function call within main. 
 #            -The results dictionary as results_dic within classify_images 
 #             function and results for the functin call within main.
-#            -The CNN model architecture as model within classify_images function
+#            -The CNN model architecture as model wihtin classify_images function
 #             and in_arg.arch for the function call within main. 
 #           This function uses the extend function to add items to the list 
 #           that's the 'value' of the results dictionary. You will be adding the
@@ -22,6 +22,7 @@
 ##
 # Imports classifier function for using CNN to classify images 
 from classifier import classifier 
+from os import listdir
 
 # TODO 3: Define classify_images function below, specifically replace the None
 #       below by the function definition of the classify_images function. 
@@ -65,4 +66,47 @@ def classify_images(images_dir, results_dic, model):
      Returns:
            None - results_dic is mutable data type so no return needed.         
     """
-    None 
+    
+    filename_list = listdir(images_dir)
+    with open('imagenet1000_clsid_to_human.txt') as f:
+        classname_list=eval(f.read())
+    #print(filename_list)#debug
+    results_dic=dict()
+    for filename in filename_list:
+        classname=classifier((images_dir+filename),model).lower().strip()
+        pet_lab=get_pet_label(filename)
+        if filename not in results_dic:
+            results_dic[filename]=[pet_lab,classname]
+        else:
+            print("\n WARNING!!!")
+        
+        if pet_lab in classname:
+            results_dic[filename].append(1)
+        else:
+            results_dic[filename].append(0)
+        
+#     return print("\n result dictionary is: \n",results_dic)
+    return results_dic
+    
+    
+    
+def get_pet_label(filename):
+    tempList=filename.lower().split("_")
+    pet_label=""
+    for word in tempList:
+        if word.isalpha():
+            if pet_label=="":
+                pet_label+=word
+            else:
+                pet_label+=" "+word
+    return pet_label.strip()
+
+def main():
+    temp=dict()
+#     temp=classify_images
+    temp=classify_images('pet_images/',temp,'vgg')
+    print("result is {}".format(temp))
+    
+if __name__ == "__main__":
+    main()
+    

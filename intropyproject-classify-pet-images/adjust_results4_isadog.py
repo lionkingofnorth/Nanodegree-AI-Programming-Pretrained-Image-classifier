@@ -67,4 +67,34 @@ def adjust_results4_isadog(results_dic, dogfile):
     Returns:
            None - results_dic is mutable data type so no return needed.
     """           
+
+    with open(dogfile) as df:
+      dog_set=set(df.read().split("\n"))
+      dog_list= list(dog_set)
+      dog_list.pop()
+      # for dog in dog_dic:
+      #   dog.strip()
+    value_list=[i for i in range(len(dog_list))]
+    dog_dic=dict(zip(dog_list,value_list))
+    print(dog_dic)
+
+    for _,v in results_dic.items():
+        #label check
+        if v[0] in dog_dic:
+          in3=1
+        else:
+          in3=0
+        if v[1] in dog_dic:
+          in4=1
+        else:
+          in4=0
+        v.extend([in3,in4])
+    
     None
+
+def main():
+    res=dict()
+    adjust_results4_isadog(res,"dognames.txt")
+
+if __name__ == "__main__":
+  main()
