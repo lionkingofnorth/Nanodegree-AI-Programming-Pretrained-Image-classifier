@@ -61,6 +61,15 @@ def print_results(results_dic, results_stats_dic, model,
                               False doesn't print anything(default) (bool) 
     Returns:
            None - simply printing results.
-    """    
+    """
+    print("\n\n*** Results Summary for CNN Model Architecture",model.upper(), 
+          "***")
+    print("{:20}: {:3d}".format('N Images', results_stats_dic['n_images']))
+    print("{:20}: {:3d}".format('N Dog Images', results_stats_dic['n_dogs_img']))
+    print("{:20}: {:3d}".format('N NOT-dog', results_stats_dic['n_notdogs_img']))
+    print("{:20}: {:2f}%".format('Match Percentage:', results_stats_dic['pct_match']))
+    print("{:20}: {:2f}%".format('Dog Match Percentage:', results_stats_dic['pct_correct_dogs']))
+    print("{:20}: {:2f}%".format('Breed Match Percentage:', results_stats_dic['pct_correct_breed']))
+    print("{:20}: {:2f}%".format('Not Dog Percentage:', results_stats_dic['pct_correct_notdogs']))
     None
                 

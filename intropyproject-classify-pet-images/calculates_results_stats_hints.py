@@ -127,6 +127,7 @@ def calculates_results_stats(results_dic):
         else:
             # Classifier classifies image as NOT a Dog(& pet image isn't a dog)
             # counts number of correct NOT dog clasifications.
+            results_stats_dic['n_correct_notdogs'] += 1
             pass
 
 

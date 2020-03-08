@@ -43,9 +43,9 @@ def get_input_args():
     parser=argparse.ArgumentParser()
     parser.add_argument('--dir',type=str,default='pet_images/'
     ,help='path to the folder of the pet images')
-    parser.add_argument('--mdl',type=str,default='vgg'
+    parser.add_argument('--arch',type=str,default='vgg'
     ,help='model of the CNN ')
-    parser.add_argument('--file',type=str,default='dognames.txt'
+    parser.add_argument('--dogfile',type=str,default='dognames.txt'
     ,help='The file that contains the list of valid dognames')
 
     return parser.parse_args()

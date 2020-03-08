@@ -76,43 +76,32 @@ def calculates_results_stats(results_dic):
     
     # Sets all counters to initial values of zero so that they can 
     # be incremented while processing through the images in results_dic 
-    results_stats_dic['n_dogs_img'] = 0
-    results_stats_dic['n_match'] = 0
-    results_stats_dic['n_correct_dogs'] = 0
-    results_stats_dic['n_correct_notdogs'] = 0
-    results_stats_dic['n_correct_breed'] = 0  
+    results_stats_dic['n_dogs_img'] = 0 #B
+    results_stats_dic['n_match'] = 0  #Y
+    results_stats_dic['n_correct_dogs'] = 0 #A
+    results_stats_dic['n_correct_notdogs'] = 0 #C
+    results_stats_dic['n_correct_breed'] = 0  #E
+    results_stats_dic['n_images'] = len(results_dic) #Z
 
+    # calculates number of not-a-dog images using - images & dog images counts 
     for key in results_dic:
         # Labels Match Exactly
         if results_dic[key][2] == 1:
                 results_stats_dic['n_match'] += 1
-
         if results_dic[key][3] == 1:
-            results_stats_dic['n_dogs_img'] += 1
-            
-            # Classifier classifies image as Dog (& pet image is a dog)ßß
-            # counts number of correct dog classifications
-            if results_dic[key][4] == 1:
+            results_stats_dic['n_dogs_img']+=1
+            if  results_dic[key][4] == 1:
                 results_stats_dic['n_correct_dogs'] += 1  
+            if results_dic[key][2] == 1:
+                results_stats_dic['n_correct_breed']+=1
 
-    results_stats_dic['n_images'] = len(results_dic)
-
-    # calculates number of not-a-dog images using - images & dog images counts
-    results_stats_dic['n_notdogs_img'] = (results_stats_dic['n_images'] - 
-                                      results_stats_dic['n_dogs_img']) 
-
+        if results_dic[key][3] == 0 and results_dic[key][4] == 0:
+            results_stats_dic['n_correct_notdogs'] += 1
     
-    results_stats_dic['pct_match'] = (results_stats_dic['n_match']/results_stats_dic['n_images'])*100
-
-    # TODO: 5d. REPLACE zero(0.0) with CODE that calculates the % of correctly
-    #           classified dog images. Recall that this can be calculated by 
-    #           the number of correctly classified dog images('n_correct_dogs')
-    #           divided by the number of dog images('n_dogs_img'). This result 
-    #           will need to be multiplied by 100.0 to provide the percentage.
-    #    
-    # Calculates % correct dogs
-    results_stats_dic['pct_correct_dogs'] = (results_stats_dic['n_correct_dogs']/results_stats_dic['n_images'])*100
-    results_stats_dic['pct_correct_breed'] = (results_stats_dic['n_correct_breed']/results_stats_dic['n_images'])*100
+    results_stats_dic['n_notdogs_img'] = (results_stats_dic['n_images'] - results_stats_dic['n_dogs_img'])
+    results_stats_dic['pct_match'] = (results_stats_dic['n_match']/results_stats_dic['n_images'])*100  
+    results_stats_dic['pct_correct_dogs'] = (results_stats_dic['n_correct_dogs']/results_stats_dic['n_dogs_img'])*100
+    results_stats_dic['pct_correct_breed'] = (results_stats_dic['n_correct_breed']/results_stats_dic['n_dogs_img'])*100
     
     if results_stats_dic['n_notdogs_img'] > 0:
         results_stats_dic['pct_correct_notdogs'] = (results_stats_dic['n_correct_notdogs'] /

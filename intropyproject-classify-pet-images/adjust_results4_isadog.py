@@ -78,8 +78,9 @@ def adjust_results4_isadog(results_dic, dogfile):
     dog_dic=dict(zip(dog_list,value_list))
     print(dog_dic)
 
-    for _,v in results_dic.items():
+    for k,v in results_dic.items():
         #label check
+        # print("results_dic key:{},\t value:{}\n".format(k,v))
         if v[0] in dog_dic:
           in3=1
         else:
